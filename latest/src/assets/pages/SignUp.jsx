@@ -48,7 +48,7 @@ export default function SignUp() {
                     }
                      setisLoading(false)
                      seterror(null)
-                     navigate('/sign-up')
+                     navigate('/sign-in')
                     } 
                     catch (error) 
                     {
@@ -56,7 +56,7 @@ export default function SignUp() {
                       seterror(error.message)
                     }
               }
-              /* console.log(formData); */
+              console.log(formData);
      //*************End Handlesubmit********* */
 
 
@@ -65,21 +65,40 @@ export default function SignUp() {
     <div className=' p-3 max-w-lg mx-auto'>
          <h1 className='text-3xl text-center font-semibold my-7'>SignUp</h1>
           <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-          <input type="text" placeholder='username'  className='sn  border p-3 rounded-lg' id='username'
+          <input 
+                type="text" 
+                placeholder='username'  
+                className='sn  border p-3 rounded-lg' 
+                id='username'
                 onChange={handleChange} />
-          <input type="email" placeholder='email'  className='sn border p-3 rounded-lg' id='email'
+
+          <input 
+                type="email" 
+                placeholder='email' 
+                className='sn border p-3 rounded-lg' 
+                id='email'
                 onChange={handleChange} />
-          <input type="password" placeholder='password'  className='sn border p-3 rounded-lg' id='password'
-                 onChange={handleChange}/>
+
+          <input
+                type="password"
+                placeholder='password'  
+                className='sn border p-3 rounded-lg' 
+                id='password'
+                autoComplete="new-password"
+                onChange={handleChange}/>
+
           {/*  BUTTON */}
-          <button disabled={isLoading} className='bg-green-700  rounded-lg text-white p-3 uppercase hover:opacity-95'>
-            {isLoading ?'Loading.....':'Signup'}
+          <button 
+            disabled={isLoading} 
+            className='bg-green-700  rounded-lg text-white p-3 
+            uppercase hover:opacity-95 disabled:opacity-85'>
+            {isLoading ?'Loading.....':'Sign Up'}
           </button>
         </form>
        
         <div className='flex gap-2 mt-3'>
             <p>Have an account?</p>
-            <Link to={'sign-in'}>
+            <Link to={'/sign-in'}>
               <span className='text-blue-700'>Signin</span>
             </Link>
         </div>
