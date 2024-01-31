@@ -1,12 +1,17 @@
 import {useState} from 'react'
 import { Link,useNavigate } from "react-router-dom"
+import {useDispatch, useSelector} from 'react-redux'
+import { signInStart,signInSuccess,signInFailure } from '../../redux/user/userSlice'
+
 
 export default function SignIn() {
 
-  const [formData, setformData] = useState({})
-   const [error, seterror] = useState(null)
-   const [isLoading, setisLoading] = useState(false)
+   const [formData, setformData] = useState({})
+   /* const [error, seterror] = useState(null)
+   const [isLoading, setisLoading] = useState(false)  //this line replace by userSlice user */
+   const {isLoading,error}=useSelector((state)=>state.user)
    const navigate=useNavigate()
+   const dispatch=useDispatch()
 
 
     //*******HANDLE CHANGE METHOD********/
@@ -28,7 +33,9 @@ export default function SignIn() {
 
                 try 
                 {
-                  setisLoading(true)
+                 /*  setisLoading(true)  //before redux */
+                  //after redux 
+                  dispatch(signInStart())
                   const res=await fetch('/Api/auth/signin',
                   {
                     method:'POST',
@@ -42,21 +49,27 @@ export default function SignIn() {
                     console.log(data)
                     if(data.success===false)
                     {
-                      setisLoading(false)
-                      seterror(data.message)
+                     /*  setisLoading(false) 
+                      seterror(data.message) // before redux*/ 
+                      //after redux 
+                      dispatch(signInFailure(data.message))
                       return
                     }
-                     setisLoading(false)
-                     seterror(null)
+                     /* setisLoading(false)
+                     seterror(null) //before redux */
+                     //after redux 
+                     dispatch(signInSuccess(data))
                      navigate('/')
                     } 
                     catch (error) 
                     {
-                      setisLoading(false)
-                      seterror(error.message)
+                      /* setisLoading(false)
+                      seterror(error.message)  //before redux */
+                     //after redux 
+                     dispatch(signInFailure(error.message)) 
                     }
               }
-              /* console.log(formData); */
+            //  console.log(formData);
      //*************End Handlesubmit********* */
 
 

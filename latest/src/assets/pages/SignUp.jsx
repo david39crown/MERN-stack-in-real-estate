@@ -56,7 +56,7 @@ export default function SignUp() {
                       seterror(error.message)
                     }
               }
-              console.log(formData);
+              
      //*************End Handlesubmit********* */
 
 
@@ -68,21 +68,21 @@ export default function SignUp() {
           <input 
                 type="text" 
                 placeholder='username'  
-                className='sn  border p-3 rounded-lg' 
+                className='sn   border-green-500  border-2 p-3 rounded-lg' 
                 id='username'
                 onChange={handleChange} />
 
           <input 
                 type="email" 
                 placeholder='email' 
-                className='sn border p-3 rounded-lg' 
+                className='sn border-2 p-3 rounded-lg' 
                 id='email'
                 onChange={handleChange} />
 
           <input
                 type="password"
                 placeholder='password'  
-                className='sn border p-3 rounded-lg' 
+                className='sn border-2 p-3 rounded-lg' 
                 id='password'
                 autoComplete="new-password"
                 onChange={handleChange}/>
