@@ -26,11 +26,14 @@ export default function Header() {
                  {currentUser ? 
                  (
                     <img className='rounded-full h-7 w-7 object-cover'src={currentUser.avatar} alt="profile" />
+                    
                  ):
                   <li className='text-neutral-950 font-bold hover:text-white'>
                     Sign In</li>
                  }
+                    
                   </Link>
+                 {/*  console.log(currentUser.avatar) */}
                 </ul>
         </div>
     </header>
