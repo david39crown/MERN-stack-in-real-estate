@@ -8,7 +8,13 @@ import {
   getDownloadURL} from 'firebase/storage'
 
 import { app } from '../../firebase'
-import { updateUserStart,updateUserSuccess,updateUserFailure } from '../../redux/user/userSlice'
+import {
+   updateUserStart,
+   updateUserSuccess,
+   updateUserFailure, 
+   deleteUserFailure, 
+   deleteUserStart,
+   deleteUserSuccess} from '../../redux/user/userSlice'
 import { useDispatch } from 'react-redux'
 export default function Profile() {
   const fileRef=useRef(null)
@@ -62,11 +68,11 @@ export default function Profile() {
               })
           } )
       }
-
+/* ***************************************** */
       const handleChange= (e)=>{
         setformData({...formData,[e.target.id]:e.target.value})
       }
-
+/* ***************************************** */
       const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -92,6 +98,32 @@ export default function Profile() {
       dispatch(updateUserFailure(error.message));
     }
   };
+
+/* ***************************************** */
+  const handleDeleteUser=async()=>
+  {
+    try 
+    {
+      dispatch(deleteUserStart())
+      const res=await fetch(`/Api/user/delete/${currentUser._id}`,
+      {
+        method:"DELETE",
+      })
+      const data=await res.json()
+      if(data.success==false)
+      {
+        dispatch(deleteUserFailure(data.message))
+        return
+      }
+        dispatch(deleteUserSuccess(data))
+    } 
+    catch 
+    (error) {
+      dispatch(deleteUserFailure(error.message))
+    }
+
+  /* ***************************************** */
+  }
   return (
     <div className='p-3 max-w-lg mx-auto'>
 
@@ -147,7 +179,7 @@ export default function Profile() {
                    text-white disabled:opacity-95'>{isLoading? 'Loading...':'Update'}</button>
         </form>   
       <div className='flex justify-between mt-5'>
-        <span className='sn border rounded-lg p-2  bg-red-700 text-white'>Delete account</span>
+        <span onClick={handleDeleteUser} className='sn border rounded-lg p-2  bg-red-700 text-white'>Delete account</span>
         <span className='sn border rounded-lg p-2 bg-red-700 text-white'>sign out</span>
 
       </div>
