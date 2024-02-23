@@ -72,3 +72,12 @@ export const google= async (req,res,next)=>
     }
 }
 //npm i bcryptjs --for  password hash
+
+export const signout=async (req,res,next)=>{
+    try {
+        res.clearCookie('access_token')
+        res.status(200).json('User has been logout!')
+    } catch (error) {
+        next(error)
+    }
+}

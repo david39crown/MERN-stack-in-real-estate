@@ -14,7 +14,10 @@ import {
    updateUserFailure, 
    deleteUserFailure, 
    deleteUserStart,
-   deleteUserSuccess} from '../../redux/user/userSlice'
+   deleteUserSuccess,
+   signOutUserStart,  
+   signOutUserSuccess,
+   signOutUserFailure,} from '../../redux/user/userSlice'
 import { useDispatch } from 'react-redux'
 export default function Profile() {
   const fileRef=useRef(null)
@@ -104,7 +107,7 @@ export default function Profile() {
   {
     try 
     {
-      dispatch(deleteUserStart())
+      dispatch(signOutUserStart())
       const res=await fetch(`/Api/user/delete/${currentUser._id}`,
       {
         method:"DELETE",
@@ -112,17 +115,35 @@ export default function Profile() {
       const data=await res.json()
       if(data.success==false)
       {
-        dispatch(deleteUserFailure(data.message))
+        dispatch(signOutUserFailure(data.message))
         return
       }
-        dispatch(deleteUserSuccess(data))
+        dispatch(signOutUserSuccess(data))
     } 
     catch 
     (error) {
-      dispatch(deleteUserFailure(error.message))
+      dispatch(signOutUserFailure(error.message))
     }
 
+  }
   /* ***************************************** */
+  const handleSignOut=async()=>
+  {
+   try
+    {
+      dispatch(signOutUserStart())
+      const res=await fetch('/Api/auth/signout')
+      const data=await res.json()
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    
+   }
+    catch (error) {
+      dispatch(deleteUserFailure(data.message));
+   }
   }
   return (
     <div className='p-3 max-w-lg mx-auto'>
@@ -180,7 +201,7 @@ export default function Profile() {
         </form>   
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteUser} className='sn border rounded-lg p-2  bg-red-700 text-white'>Delete account</span>
-        <span className='sn border rounded-lg p-2 bg-red-700 text-white'>sign out</span>
+        <span onClick={handleSignOut} className='sn border rounded-lg p-2 bg-red-700 text-white'>sign out</span>
 
       </div>
       <p className='text-red-700 mt-5'>{error ? error : ''} </p>
