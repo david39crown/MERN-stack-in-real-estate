@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import userRouter from './routes/user.route.js'
 import authRouter from './routes/auth.route.js'
 import cookieParser from 'cookie-parser'
+import listingRouter from './routes/listing.route.js'
 dotenv.config()
 
 const app=express()
@@ -27,6 +28,7 @@ app.listen(3000,()=>{
 
 app.use('/Api/user',userRouter)
 app.use('/Api/auth',authRouter)
+app.use('/Api/listing',listingRouter)
 
 app.use((err,req,res,next)=>
 {
