@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import {useRef,useState,useEffect} from 'react'
+import { Link } from 'react-router-dom'
 import {
   getStorage, 
   uploadBytesResumable,
@@ -19,6 +20,7 @@ import {
    signOutUserSuccess,
    signOutUserFailure,} from '../../redux/user/userSlice'
 import { useDispatch } from 'react-redux'
+
 export default function Profile() {
   const fileRef=useRef(null)
   const {currentUser,isLoading,error}=useSelector((state)=>state.user)
@@ -198,6 +200,7 @@ export default function Profile() {
         disabled={isLoading}
         className='bg-blue-500 p-3 rounded-lg uppercase hover:opacity-95
                    text-white disabled:opacity-95'>{isLoading? 'Loading...':'Update'}</button>
+       <Link className='bg-slate-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to={"/create listing"}>Create Listing</Link>
         </form>   
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteUser} className='sn border rounded-lg p-2  bg-red-700 text-white'>Delete account</span>
